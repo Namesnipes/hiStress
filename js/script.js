@@ -6,6 +6,8 @@ var PLAY_BAR_WIDTH = 70
 var BAR_HEIGHT = 170
 var ITEM_HEIGHT = 30
 
+var PLAY_BAR_IMG = new Image()
+PLAY_BAR_IMG.src = "assets/playBar.png"
 
 var workbar = document.getElementById("workbar");
 var workbarCanvas = workbar.getContext("2d");
@@ -60,7 +62,7 @@ function setPlayBar(canvasId,yCoord){// canvas id, y coordinate of bar (0 is the
   }
 
   canvas.beginPath();
-  canvas.rect(0,yCoord, PLAY_BAR_WIDTH, barHeight); //x, y, width, height
+  canvas.drawImage(PLAY_BAR_IMG, 0,yCoord, PLAY_BAR_WIDTH, barHeight); //x, y, width, height
   canvas.fillStyle = "#88e3a2";
   canvas.fill();
   playBars[canvasId].ypos = yCoord
