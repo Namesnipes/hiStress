@@ -136,5 +136,10 @@ function keyPress(canvasId,isUp) {
   playBar = playBars[canvasId].canvas
   playBars[canvasId].movement = Math.abs(playBars[canvasId].movement) * (isUp && 1 || -1)
 }
+var help = document.getElementById("helpbox");
+function popUp(){
+  help.style.display = "none";
+}
+document.getElementById("okbutton").addEventListener("click",popUp)
 
 setup()
