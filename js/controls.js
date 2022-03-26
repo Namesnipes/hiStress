@@ -1,13 +1,11 @@
 keys = {
     90: ['z', 0, false],
     88: ['x', 1, false],
-    78: ['n', 2, false],
-    77: ['m', 3, false]
+    77: ['m', 2, false]
 };
 
 
 document.body.onkeydown = function(e) {
-    console.log(document.activeElement.tagName)
     if (typeof keys[e.keyCode] != 'undefined') {
         var isDown = keys[e.keyCode][2]
         if(isDown) return

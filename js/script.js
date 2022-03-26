@@ -11,6 +11,12 @@ PLAY_BAR_IMG.src = "assets/playBar.png"
 
 var RANDOM_SEED = Math.random() * 1000 // very cryptographically secure
 
+var schoolbar = document.getElementById("schoolbar");
+var schoolbarCanvas = schoolbar.getContext("2d");
+
+var school = document.getElementById("school");
+var schoolCanvas = school.getContext("2d");
+
 var workbar = document.getElementById("workbar");
 var workbarCanvas = workbar.getContext("2d");
 
@@ -24,13 +30,17 @@ var mentalbarCanvas = mentalbar.getContext("2d");
 var mental = document.getElementById("mental");
 var mentalCanvas = mental.getContext("2d");
 
+
+
 var progressBars = [
+                    {"canvas": schoolbarCanvas, "percent": 0, "won": false},
                     {"canvas": workbarCanvas, "percent": 0, "won": false},
                     {"canvas": mentalbarCanvas, "percent": 0, "won": false}
                   ]
 
 
 var playBars = [
+                {"canvas": schoolCanvas, "ypos":600-BAR_HEIGHT, "movement":3, "itemYPos":300, "seed": Math.random() * 100000},
                 {"canvas": workCanvas, "ypos":600-BAR_HEIGHT, "movement":3, "itemYPos":300, "seed": Math.random() * 100000},
                 {"canvas": mentalCanvas, "ypos":600-BAR_HEIGHT, "movement":3, "itemYPos":300, "seed": Math.random() * 100000}
               ]
