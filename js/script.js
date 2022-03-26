@@ -9,6 +9,8 @@ var ITEM_HEIGHT = 30
 var PLAY_BAR_IMG = new Image()
 PLAY_BAR_IMG.src = "assets/playBar.png"
 
+var RANDOM_SEED = Math.random() * 1000 // very cryptographically secure
+
 var workbar = document.getElementById("workbar");
 var workbarCanvas = workbar.getContext("2d");
 
@@ -29,8 +31,8 @@ var progressBars = [
 
 
 var playBars = [
-                {"canvas": workCanvas, "ypos":0, "movement":2, "itemYPos":300},
-                {"canvas": mentalCanvas, "ypos":0, "movement":2, "itemYPos":300}
+                {"canvas": workCanvas, "ypos":0, "movement":3, "itemYPos":300, "seed": Math.random() * 100000},
+                {"canvas": mentalCanvas, "ypos":0, "movement":3, "itemYPos":300, "seed": Math.random() * 100000}
               ]
 
 //fills up a progress bar to corresponding percentage
@@ -68,22 +70,25 @@ function setPlayBar(canvasId,yCoord){// canvas id, y coordinate of bar (0 is the
   playBars[canvasId].ypos = yCoord
 }
 
+//moves the item corresponding to the canvasId to the y coordinate
 function setItem(canvasId, yCoord){
   var canvas = playBars[canvasId].canvas
   var itemHeight = ITEM_HEIGHT
 
   if((PLAY_BAR_HEIGHT - yCoord) < itemHeight) { //stop the bar from going through the bottom of the canvas
-    setPlayBar(canvasId, PLAY_BAR_HEIGHT - itemHeight)
+    setItem(canvasId, PLAY_BAR_HEIGHT - itemHeight)
     return
   } else if(yCoord < 0){
-    setPlayBar(canvasId, 0)
+    setItem(canvasId, 0)
     return
   }
 
   canvas.beginPath();
-  canvas.rect(0,yCoord, PLAY_BAR_WIDTH, itemHeight); //x, y, width, height
+  canvas.rect(20,yCoord, PLAY_BAR_WIDTH-40, itemHeight); //x, y, width, height
   canvas.fillStyle = "black";
   canvas.fill();
+
+  playBars[canvasId].itemYPos = yCoord
 }
 
 //moves bar up or down depending on whether user is holding down the key
@@ -96,19 +101,24 @@ function moveBar(canvasId){
 
 function increaseProgress(canvasId){
   var currentProgress = progressBars[canvasId].percent
-  console.log(currentProgress)
   setProgressBar(canvasId, currentProgress + 0.1)
 }
 
 
 
 //main game loop, ran every 1/60 of a second
+var t = new Perlin()
+var runs = 0
 function tick(){
+  runs++
   for(var i = 0; i < playBars.length; i++){
       var currentBar = playBars[i]
       currentBar.canvas.clearRect(0, 0, PLAY_BAR_WIDTH, PLAY_BAR_HEIGHT);
       moveBar(i)
-      setItem(i,300)
+
+      var RANDOM_SEED = playBars[i].seed
+      var randomYValue = t.getValue(runs/180 + RANDOM_SEED) //Math.sin(2 * (RANDOM_SEED + runs/180)) + Math.sin(Math.PI * (RANDOM_SEED + runs/180))
+      setItem(i,300 + randomYValue*320)
 
       var barTop = currentBar.ypos
       var barBottom = currentBar.ypos + BAR_HEIGHT
