@@ -21,20 +21,27 @@ body{
 }
 canvas{
   border: 2px black solid;
-}
-#workbar{
-  margin-right: 50px;
+  margin: 0px;
 }
 #workgame{
   display: inline-block;
+  width: 124px;
+  padding: 5px;
+}
+#workgame p{
+  text-align: center;
 }
 #mentalgame{
   display: inline-block;
+  width: 124px;
+  padding: 5px;
+}
+#mentalgame p{
+  text-align: center;
 }
 #bars{
   float: right;
   display: inline;
-  margin: 10px;
 }
 .clear{
   clear: both;
