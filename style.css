@@ -1,12 +1,29 @@
+@font-face{
+  font-family: Dogica;
+  src: url("fonts/dogica.otf");
+}
+body{
+  font-family: Dogica;
+}
 #game{
   border: 5px black solid;
-  width: 1000px;
+  width: 900px;
   margin: 0px auto;
   padding: 50px;
+}
+#header{
+  height: 100px;
+}
+#header h1{
+  text-align: center;
+  line-height: 100px;
 }
 canvas{
   border: 2px black solid;
 }
 #workbar{
   margin-right: 50px;
+}
+#level4{
+  width: 300px;
 }
