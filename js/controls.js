@@ -8,7 +8,7 @@ keys = {
 
 document.body.onkeydown = function(e) {
     if (document.activeElement.tagName != "INPUT" && typeof keys[e.keyCode] != 'undefined') {
-        var isDown = keys[e.keyCode][1]
+        var isDown = keys[e.keyCode][2]
         if(isDown) return
         keys[e.keyCode][2] = true
         keyPress(Number(keys[e.keyCode][1]),false);
@@ -17,7 +17,7 @@ document.body.onkeydown = function(e) {
 
 document.body.onkeyup = function(e) {
     if (document.activeElement.tagName != "INPUT" && typeof keys[e.keyCode] != 'undefined') {
-        var isDown = keys[e.keyCode][1]
+        var isDown = keys[e.keyCode][2]
         keys[e.keyCode][2] = false
         keyPress(Number(keys[e.keyCode][1]),true);
     }

@@ -4,15 +4,28 @@ var PLAY_BAR_HEIGHT = 600
 var PLAY_BAR_WIDTH = 70
 
 var workbar = document.getElementById("workbar");
-var workbarWidth = workbar.width
 var workbarCanvas = workbar.getContext("2d");
 
 var work = document.getElementById("work");
 var workCanvas = work.getContext("2d");
 
 
-var progressBars = [{"canvas": workbarCanvas}]
-var playBars = [{"canvas": workCanvas, "ypos":0, "movement":1}]
+var mentalbar = document.getElementById("mentalbar");
+var mentalbarCanvas = mentalbar.getContext("2d");
+
+var mental = document.getElementById("mental");
+var mentalCanvas = mental.getContext("2d");
+
+var progressBars = [
+                    {"canvas": workbarCanvas},
+                    {"canvas": mentalbarCanvas}
+                  ]
+
+
+var playBars = [
+                {"canvas": workCanvas, "ypos":0, "movement":1},
+                {"canvas": mentalCanvas, "ypos":0, "movement":1}
+              ]
 
 //fills up a progress bar to corresponding percentage
 function setProgressBar(canvasId,percent){ // canvas id, percent out of 100%
@@ -56,15 +69,18 @@ function setbarGravity(sign){
 
 function setup(){
   setInterval(barGravity,1000/60,0)
+  setInterval(barGravity,1000/60,1)
 }
 
 function keyPress(canvasId,isUp) {
-  console.log(canvasId)
   playBar = playBars[canvasId].canvas
   playBars[canvasId].movement = 1 * (isUp && 1 || -1)
-
 }
 
 setup()
+
 setPlayBar(0,0)
-setProgressBar(0,30)
+setProgressBar(0,5)
+
+setPlayBar(0,0)
+setProgressBar(1,5)
