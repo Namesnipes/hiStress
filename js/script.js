@@ -11,6 +11,12 @@ PLAY_BAR_IMG.src = "assets/playBar.png"
 
 var RANDOM_SEED = Math.random() * 1000 // very cryptographically secure
 
+var schoolbar = document.getElementById("schoolbar");
+var schoolbarCanvas = schoolbar.getContext("2d");
+
+var school = document.getElementById("school");
+var schoolCanvas = school.getContext("2d");
+
 var workbar = document.getElementById("workbar");
 var workbarCanvas = workbar.getContext("2d");
 
@@ -24,15 +30,19 @@ var mentalbarCanvas = mentalbar.getContext("2d");
 var mental = document.getElementById("mental");
 var mentalCanvas = mental.getContext("2d");
 
+
+
 var progressBars = [
+                    {"canvas": schoolbarCanvas, "percent": 0, "won": false},
                     {"canvas": workbarCanvas, "percent": 0, "won": false},
                     {"canvas": mentalbarCanvas, "percent": 0, "won": false}
                   ]
 
 
 var playBars = [
-                {"canvas": workCanvas, "ypos":0, "movement":3, "itemYPos":300, "seed": Math.random() * 100000},
-                {"canvas": mentalCanvas, "ypos":0, "movement":3, "itemYPos":300, "seed": Math.random() * 100000}
+                {"canvas": schoolCanvas, "ypos":600-BAR_HEIGHT, "movement":3, "itemYPos":300, "seed": Math.random() * 100000},
+                {"canvas": workCanvas, "ypos":600-BAR_HEIGHT, "movement":3, "itemYPos":300, "seed": Math.random() * 100000},
+                {"canvas": mentalCanvas, "ypos":600-BAR_HEIGHT, "movement":3, "itemYPos":300, "seed": Math.random() * 100000}
               ]
 
 //fills up a progress bar to corresponding percentage
@@ -136,17 +146,17 @@ function tick(){
       if(itemTop > barTop && itemBottom < barBottom){
         changeProgress(i,0.2)
       } else {
-        changeProgress(i,-0.1)
+        changeProgress(i,-0.05)
       }
   }
 }
 
 function setup(){
+  for(var i = 0; i < progressBars.length; i++){
+    changeProgress(i,50)
+  }
   setInterval(tick,1000/60)
 }
-
-setPlayBar(0,430)
-setPlayBar(1,430)
 
 function keyPress(canvasId,isUp) {
   playBar = playBars[canvasId].canvas
@@ -157,8 +167,8 @@ function keyPress(canvasId,isUp) {
 //start the game after user clicks play
 var help = document.getElementById("helpbox");
 
-function popUp(){
+function popUpClicked(){
   help.style.display = "none";
   setup()
 }
-document.getElementById("okbutton").addEventListener("click",popUp)
+document.getElementById("okbutton").addEventListener("click",popUpClicked)
