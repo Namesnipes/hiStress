@@ -124,7 +124,7 @@ function tick(){
       moveBar(i)
 
       var RANDOM_SEED = playBars[i].seed
-      var randomYValue = t.getValue(runs/180 + RANDOM_SEED) //Math.sin(2 * (RANDOM_SEED + runs/180)) + Math.sin(Math.PI * (RANDOM_SEED + runs/180))
+      var randomYValue = t.getValue(runs/500 + RANDOM_SEED) //Math.sin(2 * (RANDOM_SEED + runs/180)) + Math.sin(Math.PI * (RANDOM_SEED + runs/180))
       setItem(i,300 + randomYValue*320)
 
       var barTop = currentBar.ypos
