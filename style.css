@@ -1,1 +1,9 @@
-
+#game{
+  border: 5px black solid;
+  width: 1500px;
+  margin: 0px auto;
+  padding: 50px;
+}
+canvas{
+  border: 2px black solid;
+}
