@@ -9,7 +9,8 @@ body{
   border: 5px black solid;
   width: 900px;
   margin: 0px auto;
-  padding: 50px;
+  padding: 20px;
+  position: relative;
 }
 #header{
   height: 100px;
@@ -24,6 +25,30 @@ canvas{
 #workbar{
   margin-right: 50px;
 }
+#workgame{
+  display: inline-block;
+}
+#mentalgame{
+  display: inline-block;
+}
+#bars{
+  float: right;
+  display: inline;
+  margin: 10px;
+}
+.clear{
+  clear: both;
+}
 #level4{
   width: 300px;
+  position: absolute;
+  top: 160px;
+  left: 60px;
+  z-index: 3;
+}
+#cloud{
+  width: 400px;
+  position: absolute;
+  left: 20px;
+  top: 150px;
 }
