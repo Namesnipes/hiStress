@@ -25,8 +25,8 @@ var mental = document.getElementById("mental");
 var mentalCanvas = mental.getContext("2d");
 
 var progressBars = [
-                    {"canvas": workbarCanvas, "percent": 0},
-                    {"canvas": mentalbarCanvas, "percent": 0}
+                    {"canvas": workbarCanvas, "percent": 0, "won": false},
+                    {"canvas": mentalbarCanvas, "percent": 0, "won": false}
                   ]
 
 
@@ -37,7 +37,12 @@ var playBars = [
 
 //fills up a progress bar to corresponding percentage
 function setProgressBar(canvasId,percent){ // canvas id, percent out of 100%
-  if(percent > 100) percent = 100
+  if(progressBars[canvasId].won) percent = 100
+  if(percent >= 100) {
+    percent = 100
+    progressBars[canvasId].won = true
+  }
+  if(percent < 0) percent = 0
   var canvas = progressBars[canvasId].canvas
   var percentDecimal = percent/100
   var yCoord = 600 - (600 * percentDecimal)
@@ -99,9 +104,9 @@ function moveBar(canvasId){
   setPlayBar(canvasId,currentYPos+relativeMovement)
 }
 
-function increaseProgress(canvasId){
+function changeProgress(canvasId,amount){
   var currentProgress = progressBars[canvasId].percent
-  setProgressBar(canvasId, currentProgress + 0.1)
+  setProgressBar(canvasId, currentProgress + amount)
 }
 
 
@@ -113,7 +118,9 @@ function tick(){
   runs++
   for(var i = 0; i < playBars.length; i++){
       var currentBar = playBars[i]
+      var currentProgress = progressBars[i]
       currentBar.canvas.clearRect(0, 0, PLAY_BAR_WIDTH, PLAY_BAR_HEIGHT);
+      currentProgress.canvas.clearRect(0, 0, PROGRESS_BAR_WIDTH, PROGRESS_BAR_HEIGHT);
       moveBar(i)
 
       var RANDOM_SEED = playBars[i].seed
@@ -127,29 +134,31 @@ function tick(){
       var itemBottom = currentBar.itemYPos + ITEM_HEIGHT
 
       if(itemTop > barTop && itemBottom < barBottom){
-        increaseProgress(i)
+        changeProgress(i,0.2)
+      } else {
+        changeProgress(i,-0.1)
       }
   }
 }
 
 function setup(){
-  setPlayBar(0,0)
-  setProgressBar(0,5)
-
-  setPlayBar(0,0)
-  setProgressBar(1,5)
-
   setInterval(tick,1000/60)
 }
+
+setPlayBar(0,430)
+setPlayBar(1,430)
 
 function keyPress(canvasId,isUp) {
   playBar = playBars[canvasId].canvas
   playBars[canvasId].movement = Math.abs(playBars[canvasId].movement) * (isUp && 1 || -1)
 }
+
+
+//start the game after user clicks play
 var help = document.getElementById("helpbox");
+
 function popUp(){
   help.style.display = "none";
+  setup()
 }
 document.getElementById("okbutton").addEventListener("click",popUp)
-
-setup()
