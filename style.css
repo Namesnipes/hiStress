@@ -3,7 +3,7 @@
   src: url("fonts/dogica.otf");
 }
 body{
-  font-family: Dogica;
+  font-family: "Dogica", "Courier New", monospace;
 }
 #game{
   border: 5px black solid;
