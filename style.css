@@ -23,6 +23,14 @@ canvas{
   border: 2px black solid;
   margin: 0px;
 }
+#schoolgame{
+  display: inline-block;
+  width: 124px;
+  padding: 5px;
+}
+#schoolgame p{
+  text-align: center;
+}
 #workgame{
   display: inline-block;
   width: 124px;
@@ -86,5 +94,5 @@ canvas{
   position: absolute;
   left: 327px;
   bottom: 28px;
-  cursor: pointer;
+  user-select: none;
 }
