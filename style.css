@@ -52,3 +52,32 @@ canvas{
   left: 20px;
   top: 150px;
 }
+#helpbox{
+  width: 700px;
+  height: 300px;
+  border: 5px black solid;
+  padding: 20px;
+  display: block;
+  z-index: 4;
+  position: absolute;
+  left: 100px;
+  right: 100px;
+  top: 100px;
+  background-color: white;
+}
+#helpbox h2{
+  text-align: center;
+}
+#okbutton{
+  width: 125px;
+  position: absolute;
+  left: 290px;
+  bottom: 20px;
+}
+#ok{
+  font-size: 25px;
+  position: absolute;
+  left: 327px;
+  bottom: 28px;
+  cursor: pointer;
+}
