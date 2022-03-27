@@ -231,15 +231,23 @@ function keyPress(canvasId,isUp) {
   playBars[canvasId].movement = Math.abs(playBars[canvasId].movement) * (isUp && 1 || -1)
 }
 
+var win = document.getElementById("winbox");
+var lose = document.getElementById("losebox");
 
 function onWin(){
-  var win = document.getElementById("winbox");
   win.style.display = "block";
 }
 
 function onLose(){
-  var lose = document.getElementById("losebox");
   lose.style.display = "block";
+}
+
+function losePopupClicked(){
+  location.reload()
+}
+
+function winPopupClicked(){
+  win.style.display = "none";
 }
 
 //start the game after user clicks play
@@ -250,3 +258,5 @@ function popUpClicked(){
   setup()
 }
 document.getElementById("okbutton").addEventListener("click",popUpClicked)
+document.getElementById("okbutton_lose").addEventListener("click",losePopupClicked)
+document.getElementById("okbutton_win").addEventListener("click",winPopupClicked)
