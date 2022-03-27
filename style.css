@@ -28,10 +28,9 @@ body{
 }
 #header{
   height: 100px;
-}
-#header h1{
-  text-align: center;
-  line-height: 100px;
+  position: relative;
+  width: 900px;
+  margin: 0px auto;
 }
 canvas{
   border: 2px black solid;
@@ -146,4 +145,9 @@ canvas{
   position: absolute;
   left: 290px;
   bottom: 20px;
+}
+#title{
+  width: 450px;
+  position: absolute;
+  left: 225px;
 }
