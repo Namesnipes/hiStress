@@ -99,6 +99,34 @@ canvas{
 #helpbox h2{
   text-align: center;
 }
+#winbox{
+  width: 700px;
+  height: 300px;
+  border: 5px black solid;
+  padding: 20px;
+  z-index: 4;
+  position: absolute;
+  left: 100px;
+  right: 100px;
+  top: 100px;
+  background-color: white;
+  display: none;
+}
+#losebox{
+  width: 700px;
+  height: 300px;
+  border: 5px black solid;
+  padding: 20px;
+  z-index: 4;
+  position: absolute;
+  left: 100px;
+  right: 100px;
+  top: 100px;
+  background-color: white;
+  display: none;
+}
+
+
 #okbutton{
   width: 125px;
   position: absolute;

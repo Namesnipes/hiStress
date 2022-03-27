@@ -33,9 +33,9 @@ var mentalCanvas = mental.getContext("2d");
 
 
 var progressBars = [
-                    {"canvas": schoolbarCanvas, "percent": 0, "won": false, "decreaseSpeed": 0.05},
-                    {"canvas": workbarCanvas, "percent": 0, "won": false, "decreaseSpeed": 0.05},
-                    {"canvas": mentalbarCanvas, "percent": 0, "won": false, "decreaseSpeed": 0.05}
+                    {"canvas": schoolbarCanvas, "percent": 0, "won": false, "decreaseSpeed": 0.05, "losing": false},
+                    {"canvas": workbarCanvas, "percent": 0, "won": false, "decreaseSpeed": 0.05, "losing": false},
+                    {"canvas": mentalbarCanvas, "percent": 0, "won": false, "decreaseSpeed": 0.05, "losing": false}
                   ]
 
 var schoolImage = new Image(33,33)
@@ -55,12 +55,22 @@ var playBars = [ // canvas, y positionof bar, movement speed of bar when you pre
 
 //fills up a progress bar to corresponding percentage
 function setProgressBar(canvasId,percent){ // canvas id, percent out of 100%
-  //if(progressBars[canvasId].won) percent = 100
-  if(percent >= 100) {
+  if(percent > 100) {
     percent = 100
-    progressBars[canvasId].won = true
   }
   if(percent < 0) percent = 0
+
+  if(percent > 98){
+    progressBars[canvasId].won = true
+  } else {
+    progressBars[canvasId].won = false
+  }
+  if(percent < 2){
+    progressBars[canvasId].losing = true
+  } else {
+    progressBars[canvasId].losing = false
+  }
+
   var canvas = progressBars[canvasId].canvas
   var percentDecimal = percent/100
   var yCoord = 600 - (600 * percentDecimal)
@@ -137,13 +147,19 @@ function changeProgress(canvasId,amount){
 //main game loop, ran every 1/60 of a second
 var t = new Perlin()
 var runs = 0
+var gameLoop;
+
 function tick(){
   runs++
+  var lost = true
+  var won = true
   for(var i = 0; i < playBars.length; i++){
       var currentBar = playBars[i]
       var currentProgress = progressBars[i]
       currentBar.canvas.clearRect(0, 0, PLAY_BAR_WIDTH, PLAY_BAR_HEIGHT);
       currentProgress.canvas.clearRect(0, 0, PROGRESS_BAR_WIDTH, PROGRESS_BAR_HEIGHT);
+      lost = lost && currentProgress.losing
+      won = won && currentProgress.won
 
       //move play bar
       moveBar(i)
@@ -161,12 +177,11 @@ function tick(){
       var itemSpeed = playBars[i].itemSpeed
       var randomYValue = t.getValue((itemPos+itemSpeed)/(500)) //returns a value 1 to -1 exclusive //Math.sin(2 * (RANDOM_SEED + runs/180)) + Math.sin(Math.PI * (RANDOM_SEED + runs/180))
       playBars[i].itemPos = (itemPos+itemSpeed)
-      playBars[i].itemSpeed = stressorSpeed * 7
-      setItem(i,300 + randomYValue*200)
+      playBars[i].itemSpeed = 0.25 * Math.pow(100,stressorSpeed)
+      setItem(i,300 + randomYValue*(320) + (i==2 && -170))
 
       //move progress bar
-      currentProgress.decreaseSpeed = 0.01 * Math.pow(50,stressorSpeed)
-      console.log(currentProgress.decreaseSpeed)
+      currentProgress.decreaseSpeed = 0.005 * Math.pow(100,stressorSpeed)
       var barTop = currentBar.ypos
       var barBottom = currentBar.ypos + BAR_HEIGHT
 
@@ -179,13 +194,25 @@ function tick(){
         changeProgress(i,-currentProgress.decreaseSpeed)
       }
   }
+
+  if(won){
+    console.log("WINNER!!!!!!!")
+    clearInterval(gameLoop)
+    onWin()
+  }
+
+  if(lost){
+    console.log("LOSERR!!!!!!!")
+    clearInterval(gameLoop)
+    onLose()
+  }
 }
 
 function setup(){
   for(var i = 0; i < progressBars.length; i++){
     changeProgress(i,50)
   }
-  setInterval(tick,1000/60)
+  gameLoop = setInterval(tick,1000/60)
 }
 
 function keyPress(canvasId,isUp) {
@@ -193,6 +220,16 @@ function keyPress(canvasId,isUp) {
   playBars[canvasId].movement = Math.abs(playBars[canvasId].movement) * (isUp && 1 || -1)
 }
 
+
+function onWin(){
+  var win = document.getElementById("winbox");
+  win.style.display = "block";
+}
+
+function onLose(){
+  var lose = document.getElementById("losebox");
+  lose.style.display = "block";
+}
 
 //start the game after user clicks play
 var help = document.getElementById("helpbox");
