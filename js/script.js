@@ -47,6 +47,9 @@ workImage.src = "assets/workIcon.png"
 var mhImage = new Image(37,32)
 mhImage.src = "assets/mentalIcon.png"
 
+var gradientImage = new Image()
+gradientImage.src = "assets/gradient.png"
+
 var playBars = [ // canvas, y positionof bar, movement speed of bar when you press a key, y position of item, item image, speed item moves, special var for calculating item position
                 {"canvas": schoolCanvas, "ypos":600-BAR_HEIGHT, "movement":3, "itemYPos":300, "itemIcon": schoolImage, "itemSpeed":0.5, "itemPos":Math.random() * 100000},
                 {"canvas": workCanvas, "ypos":600-BAR_HEIGHT, "movement":3, "itemYPos":300, "itemIcon": workImage, "itemSpeed":0.5, "itemPos":Math.random() * 100000},
@@ -87,9 +90,13 @@ function setProgressBar(canvasId,percent){ // canvas id, percent out of 100%
   var yCoord = 600 - (600 * percentDecimal)
   var height = 600 - yCoord
 
+
   canvas.beginPath();
-  canvas.rect(0,yCoord, PROGRESS_BAR_WIDTH, height); //x, y, width, height
-  canvas.fillStyle = "#88e3a2";
+  canvas.drawImage(gradientImage, 0,0, PROGRESS_BAR_WIDTH, PROGRESS_BAR_HEIGHT);
+
+  canvas.beginPath();
+  canvas.rect(0,0, PROGRESS_BAR_WIDTH, yCoord); //x, y, width, height
+  canvas.fillStyle = "white";
   canvas.fill();
   progressBars[canvasId].percent = percent
 }
@@ -108,9 +115,11 @@ function setPlayBar(canvasId,yCoord){// canvas id, y coordinate of bar (0 is the
   }
 
   canvas.beginPath();
-  canvas.drawImage(PLAY_BAR_IMG, 0,yCoord, PLAY_BAR_WIDTH, barHeight); //x, y, width, height
-  canvas.fillStyle = "#88e3a2";
+  canvas.rect(0,0, PLAY_BAR_WIDTH, PLAY_BAR_HEIGHT); //x, y, width, height
+  canvas.fillStyle = "white";
   canvas.fill();
+  canvas.drawImage(PLAY_BAR_IMG, 0,yCoord, PLAY_BAR_WIDTH, barHeight); //x, y, width, height
+
   playBars[canvasId].ypos = yCoord
 }
 
@@ -231,15 +240,23 @@ function keyPress(canvasId,isUp) {
   playBars[canvasId].movement = Math.abs(playBars[canvasId].movement) * (isUp && 1 || -1)
 }
 
+var win = document.getElementById("winbox");
+var lose = document.getElementById("losebox");
 
 function onWin(){
-  var win = document.getElementById("winbox");
   win.style.display = "block";
 }
 
 function onLose(){
-  var lose = document.getElementById("losebox");
   lose.style.display = "block";
+}
+
+function losePopupClicked(){
+  location.reload()
+}
+
+function winPopupClicked(){
+  win.style.display = "none";
 }
 
 //start the game after user clicks play
@@ -250,3 +267,5 @@ function popUpClicked(){
   setup()
 }
 document.getElementById("okbutton").addEventListener("click",popUpClicked)
+document.getElementById("okbutton_lose").addEventListener("click",losePopupClicked)
+document.getElementById("okbutton_win").addEventListener("click",winPopupClicked)

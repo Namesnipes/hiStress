@@ -144,3 +144,16 @@ canvas{
   bottom: 28px;
   user-select: none;
 }
+
+#okbutton_win{
+  width: 125px;
+  position: absolute;
+  left: 290px;
+  bottom: 20px;
+}
+#okbutton_lose{
+  width: 125px;
+  position: absolute;
+  left: 290px;
+  bottom: 20px;
+}
