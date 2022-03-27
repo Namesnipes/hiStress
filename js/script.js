@@ -33,9 +33,9 @@ var mentalCanvas = mental.getContext("2d");
 
 
 var progressBars = [
-                    {"canvas": schoolbarCanvas, "percent": 0, "won": false},
-                    {"canvas": workbarCanvas, "percent": 0, "won": false},
-                    {"canvas": mentalbarCanvas, "percent": 0, "won": false}
+                    {"canvas": schoolbarCanvas, "percent": 0, "won": false, "decreaseSpeed": 0.05},
+                    {"canvas": workbarCanvas, "percent": 0, "won": false, "decreaseSpeed": 0.05},
+                    {"canvas": mentalbarCanvas, "percent": 0, "won": false, "decreaseSpeed": 0.05}
                   ]
 
 var schoolImage = new Image(33,33)
@@ -47,10 +47,10 @@ workImage.src = "assets/workIcon.png"
 var mhImage = new Image(37,32)
 mhImage.src = "assets/mentalIcon.png"
 
-var playBars = [
-                {"canvas": schoolCanvas, "ypos":600-BAR_HEIGHT, "movement":3, "itemYPos":300, "seed": Math.random() * 100000, "itemIcon": schoolImage},
-                {"canvas": workCanvas, "ypos":600-BAR_HEIGHT, "movement":3, "itemYPos":300, "seed": Math.random() * 100000, "itemIcon": workImage},
-                {"canvas": mentalCanvas, "ypos":600-BAR_HEIGHT, "movement":3, "itemYPos":300, "seed": Math.random() * 100000, "itemIcon": mhImage}
+var playBars = [ // canvas, y positionof bar, movement speed of bar when you press a key, y position of item, item image, speed item moves, special var for calculating item position
+                {"canvas": schoolCanvas, "ypos":600-BAR_HEIGHT, "movement":3, "itemYPos":300, "itemIcon": schoolImage, "itemSpeed":0.5, "itemPos":Math.random() * 100000},
+                {"canvas": workCanvas, "ypos":600-BAR_HEIGHT, "movement":3, "itemYPos":300, "itemIcon": workImage, "itemSpeed":0.5, "itemPos":Math.random() * 100000},
+                {"canvas": mentalCanvas, "ypos":600-BAR_HEIGHT, "movement":3, "itemYPos":300, "itemIcon": mhImage, "itemSpeed":0.5, "itemPos":Math.random() * 100000}
               ]
 
 //fills up a progress bar to corresponding percentage
@@ -157,22 +157,26 @@ function tick(){
       if(i != 2){
         stressorSpeed = 1 - (progressBars[2].percent / 100)
       }
-      var RANDOM_SEED = playBars[i].seed
-      var randomYValue = t.getValue(runs/(500) + RANDOM_SEED) //returns a value 1 to -1 exclusive //Math.sin(2 * (RANDOM_SEED + runs/180)) + Math.sin(Math.PI * (RANDOM_SEED + runs/180))
-      if(i == 0)console.log(randomYValue)
-      setItem(i,300 + randomYValue*520)
+      var itemPos = playBars[i].itemPos
+      var itemSpeed = playBars[i].itemSpeed
+      var randomYValue = t.getValue((itemPos+itemSpeed)/(500)) //returns a value 1 to -1 exclusive //Math.sin(2 * (RANDOM_SEED + runs/180)) + Math.sin(Math.PI * (RANDOM_SEED + runs/180))
+      playBars[i].itemPos = (itemPos+itemSpeed)
+      playBars[i].itemSpeed = stressorSpeed * 7
+      setItem(i,300 + randomYValue*200)
 
       //move progress bar
+      currentProgress.decreaseSpeed = 0.01 * Math.pow(50,stressorSpeed)
+      console.log(currentProgress.decreaseSpeed)
       var barTop = currentBar.ypos
       var barBottom = currentBar.ypos + BAR_HEIGHT
 
       var itemTop = currentBar.itemYPos
       var itemBottom = currentBar.itemYPos + img.height
 
-      if(itemTop > barTop && itemBottom < barBottom){
-        changeProgress(i,0.2)
+      if(itemTop >= barTop && itemBottom <= barBottom){
+        changeProgress(i,0.1)
       } else {
-        changeProgress(i,-0.05)
+        changeProgress(i,-currentProgress.decreaseSpeed)
       }
   }
 }
