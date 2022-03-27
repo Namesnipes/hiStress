@@ -54,11 +54,14 @@ var playBars = [ // canvas, y positionof bar, movement speed of bar when you pre
               ]
 
 //fills up a progress bar to corresponding percentage
+var emoticonElem = document.getElementById("level")
+var lvl = 2
+
 function setProgressBar(canvasId,percent){ // canvas id, percent out of 100%
   if(percent > 100) {
     percent = 100
   }
-  if(percent < 0) percent = 0
+  if(percent < 0) percent = 0.01
 
   if(percent > 98){
     progressBars[canvasId].won = true
@@ -69,6 +72,14 @@ function setProgressBar(canvasId,percent){ // canvas id, percent out of 100%
     progressBars[canvasId].losing = true
   } else {
     progressBars[canvasId].losing = false
+  }
+
+
+  if(canvasId == 2 && lvl != Math.ceil(percent / 25)){
+    console.log(Math.ceil(percent / 25))
+    lvl = Math.ceil(percent / 25)
+    var newEmote = "assets/level" + lvl + ".gif"
+    emoticonElem.src = newEmote
   }
 
   var canvas = progressBars[canvasId].canvas
