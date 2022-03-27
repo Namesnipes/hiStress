@@ -1,7 +1,7 @@
-var PROGRESS_BAR_HEIGHT = 600
-var PROGRESS_BAR_WIDTH = 30
-var PLAY_BAR_HEIGHT = 600
-var PLAY_BAR_WIDTH = 70
+var PROGRESS_BAR_HEIGHT = 500
+var PROGRESS_BAR_WIDTH = 25
+var PLAY_BAR_HEIGHT = 500
+var PLAY_BAR_WIDTH = 58
 
 var BAR_HEIGHT = 170
 var ITEM_HEIGHT = 30
@@ -51,9 +51,9 @@ var gradientImage = new Image()
 gradientImage.src = "assets/gradient.png"
 
 var playBars = [ // canvas, y positionof bar, movement speed of bar when you press a key, y position of item, item image, speed item moves, special var for calculating item position
-                {"canvas": schoolCanvas, "ypos":600-BAR_HEIGHT, "movement":3, "itemYPos":300, "itemIcon": schoolImage, "itemSpeed":0.5, "itemPos":Math.random() * 100000},
-                {"canvas": workCanvas, "ypos":600-BAR_HEIGHT, "movement":3, "itemYPos":300, "itemIcon": workImage, "itemSpeed":0.5, "itemPos":Math.random() * 100000},
-                {"canvas": mentalCanvas, "ypos":600-BAR_HEIGHT, "movement":3, "itemYPos":300, "itemIcon": mhImage, "itemSpeed":0.5, "itemPos":Math.random() * 100000}
+                {"canvas": schoolCanvas, "ypos":500-BAR_HEIGHT, "movement":3, "itemYPos":300, "itemIcon": schoolImage, "itemSpeed":0.5, "itemPos":Math.random() * 100000},
+                {"canvas": workCanvas, "ypos":500-BAR_HEIGHT, "movement":3, "itemYPos":300, "itemIcon": workImage, "itemSpeed":0.5, "itemPos":Math.random() * 100000},
+                {"canvas": mentalCanvas, "ypos":500-BAR_HEIGHT, "movement":3, "itemYPos":300, "itemIcon": mhImage, "itemSpeed":0.5, "itemPos":Math.random() * 100000}
               ]
 
 //fills up a progress bar to corresponding percentage
@@ -87,8 +87,8 @@ function setProgressBar(canvasId,percent){ // canvas id, percent out of 100%
 
   var canvas = progressBars[canvasId].canvas
   var percentDecimal = percent/100
-  var yCoord = 600 - (600 * percentDecimal)
-  var height = 600 - yCoord
+  var yCoord = 500 - (500 * percentDecimal)
+  var height = 500 - yCoord
 
 
   canvas.beginPath();
@@ -198,7 +198,7 @@ function tick(){
       var randomYValue = t.getValue((itemPos+itemSpeed)/(500)) //returns a value 1 to -1 exclusive //Math.sin(2 * (RANDOM_SEED + runs/180)) + Math.sin(Math.PI * (RANDOM_SEED + runs/180))
       playBars[i].itemPos = (itemPos+itemSpeed)
       playBars[i].itemSpeed = 0.25 * Math.pow(100,stressorSpeed)
-      setItem(i,300 + randomYValue*(320) + (i==2 && -170))
+      setItem(i,250 + randomYValue*(270) + (i==2 && -170))
 
       //move progress bar
       currentProgress.decreaseSpeed = 0.005 * Math.pow(100,stressorSpeed)
@@ -252,7 +252,11 @@ function onLose(){
 }
 
 function losePopupClicked(){
-  location.reload()
+  var url = window.location.href;
+  if (!(url.indexOf('?') > -1)){
+   url += '?restart=1'
+ }
+ window.location.href = url;
 }
 
 function winPopupClicked(){
@@ -266,6 +270,10 @@ function popUpClicked(){
   help.style.display = "none";
   setup()
 }
+if( window.location.href.indexOf('?') > -1){
+  popUpClicked()
+}
+
 document.getElementById("okbutton").addEventListener("click",popUpClicked)
 document.getElementById("okbutton_lose").addEventListener("click",losePopupClicked)
 document.getElementById("okbutton_win").addEventListener("click",winPopupClicked)
