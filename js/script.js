@@ -3,7 +3,7 @@ var PROGRESS_BAR_WIDTH = 25
 var PLAY_BAR_HEIGHT = 500
 var PLAY_BAR_WIDTH = 58
 
-var BAR_HEIGHT = 170
+var BAR_HEIGHT = 141
 var ITEM_HEIGHT = 30
 
 var PLAY_BAR_IMG = new Image()
