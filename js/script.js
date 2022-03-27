@@ -41,10 +41,16 @@ var progressBars = [
 var schoolImage = new Image()
 schoolImage.src = "assets/schoolIcon.png"
 
+var workImage = new Image()
+workImage.src = "assets/workIcon.png"
+
+var mhImage = new Image()
+mhImage.src = "assets/mentalIcon.png"
+
 var playBars = [
                 {"canvas": schoolCanvas, "ypos":600-BAR_HEIGHT, "movement":3, "itemYPos":300, "seed": Math.random() * 100000, "itemIcon": schoolImage},
-                {"canvas": workCanvas, "ypos":600-BAR_HEIGHT, "movement":3, "itemYPos":300, "seed": Math.random() * 100000},
-                {"canvas": mentalCanvas, "ypos":600-BAR_HEIGHT, "movement":3, "itemYPos":300, "seed": Math.random() * 100000}
+                {"canvas": workCanvas, "ypos":600-BAR_HEIGHT, "movement":3, "itemYPos":300, "seed": Math.random() * 100000, "itemIcon": workImage},
+                {"canvas": mentalCanvas, "ypos":600-BAR_HEIGHT, "movement":3, "itemYPos":300, "seed": Math.random() * 100000, "itemIcon": mhImage}
               ]
 
 //fills up a progress bar to corresponding percentage
@@ -104,7 +110,7 @@ function setItem(canvasId, yCoord){
   if(playBars[canvasId].itemIcon){
     canvas.drawImage(playBars[canvasId].itemIcon, 20,yCoord, PLAY_BAR_WIDTH-40, itemHeight); //x, y, width, height
   } else {
-      canvas.rect(20,yCoord, PLAY_BAR_WIDTH-40, itemHeight); //x, y, width, height
+      canvas.rect(40,yCoord, PLAY_BAR_WIDTH-80, itemHeight); //x, y, width, height
   }
   canvas.fillStyle = "black";
   canvas.fill();
@@ -149,7 +155,8 @@ function tick(){
         stressorSpeed = 1 - (progressBars[2].percent / 100)
       }
       var RANDOM_SEED = playBars[i].seed
-      var randomYValue = t.getValue(runs/(500) + RANDOM_SEED) //Math.sin(2 * (RANDOM_SEED + runs/180)) + Math.sin(Math.PI * (RANDOM_SEED + runs/180))
+      var randomYValue = t.getValue(runs/(500) + RANDOM_SEED) //returns a value 1 to -1 exclusive //Math.sin(2 * (RANDOM_SEED + runs/180)) + Math.sin(Math.PI * (RANDOM_SEED + runs/180))
+      if(i == 0)console.log(randomYValue)
       setItem(i,300 + randomYValue*320)
 
       //move progress bar
