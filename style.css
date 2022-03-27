@@ -129,22 +129,12 @@ canvas{
   font-size: 14px;
   line-height: 19px;
 }
-
-
 #okbutton{
   width: 125px;
   position: absolute;
   left: 290px;
   bottom: 20px;
 }
-#ok{
-  font-size: 25px;
-  position: absolute;
-  left: 327px;
-  bottom: 28px;
-  user-select: none;
-}
-
 #okbutton_win{
   width: 125px;
   position: absolute;
