@@ -101,7 +101,7 @@ canvas{
 }
 #winbox{
   width: 700px;
-  height: 300px;
+  height: 350px;
   border: 5px black solid;
   padding: 20px;
   z-index: 4;
@@ -114,7 +114,7 @@ canvas{
 }
 #losebox{
   width: 700px;
-  height: 300px;
+  height: 350px;
   border: 5px black solid;
   padding: 20px;
   z-index: 4;
@@ -124,6 +124,10 @@ canvas{
   top: 100px;
   background-color: white;
   display: none;
+}
+#losetext{
+  font-size: 14px;
+  line-height: 19px;
 }
 
 
