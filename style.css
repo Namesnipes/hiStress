@@ -4,14 +4,27 @@
 }
 body{
   font-family: "Dogica", "Courier New", monospace;
+  background-color: #acbafc;
+}
+#notebook{
+  background-color: #acbafc;
+  width: 900px;
+  padding: 40px 40px 0px;
+  margin: 0px auto;
+  height: 60px;
+  background-image: url("assets/binding.png");
+  background-size: cover;
 }
 #game{
-  border: 5px black solid;
   width: 900px;
-  margin: 0px auto;
   padding: 40px 40px 0px;
   position: relative;
+  margin: 0px auto;
   background-image: url("assets/noteBg.png");
+  background-size: cover;
+}
+#footer{
+  height: 50px;
 }
 #header{
   height: 100px;
@@ -61,15 +74,15 @@ canvas{
 #level4{
   width: 300px;
   position: absolute;
-  top: 160px;
-  left: 60px;
+  top: 210px;
+  left: 70px;
   z-index: 3;
 }
 #cloud{
   width: 400px;
   position: absolute;
-  left: 20px;
-  top: 150px;
+  left: 30px;
+  top: 200px;
 }
 #helpbox{
   width: 700px;
@@ -79,8 +92,7 @@ canvas{
   display: block;
   z-index: 4;
   position: absolute;
-  left: 100px;
-  right: 100px;
+  left: 115px;
   top: 100px;
   background-color: white;
 }
