@@ -38,16 +38,18 @@ var progressBars = [
                     {"canvas": mentalbarCanvas, "percent": 0, "won": false}
                   ]
 
+var schoolImage = new Image()
+schoolImage.src = "assets/schoolIcon.png"
 
 var playBars = [
-                {"canvas": schoolCanvas, "ypos":600-BAR_HEIGHT, "movement":3, "itemYPos":300, "seed": Math.random() * 100000},
+                {"canvas": schoolCanvas, "ypos":600-BAR_HEIGHT, "movement":3, "itemYPos":300, "seed": Math.random() * 100000, "itemIcon": schoolImage},
                 {"canvas": workCanvas, "ypos":600-BAR_HEIGHT, "movement":3, "itemYPos":300, "seed": Math.random() * 100000},
                 {"canvas": mentalCanvas, "ypos":600-BAR_HEIGHT, "movement":3, "itemYPos":300, "seed": Math.random() * 100000}
               ]
 
 //fills up a progress bar to corresponding percentage
 function setProgressBar(canvasId,percent){ // canvas id, percent out of 100%
-  if(progressBars[canvasId].won) percent = 100
+  //if(progressBars[canvasId].won) percent = 100
   if(percent >= 100) {
     percent = 100
     progressBars[canvasId].won = true
@@ -99,7 +101,11 @@ function setItem(canvasId, yCoord){
   }
 
   canvas.beginPath();
-  canvas.rect(20,yCoord, PLAY_BAR_WIDTH-40, itemHeight); //x, y, width, height
+  if(playBars[canvasId].itemIcon){
+    canvas.drawImage(playBars[canvasId].itemIcon, 20,yCoord, PLAY_BAR_WIDTH-40, itemHeight); //x, y, width, height
+  } else {
+      canvas.rect(20,yCoord, PLAY_BAR_WIDTH-40, itemHeight); //x, y, width, height
+  }
   canvas.fillStyle = "black";
   canvas.fill();
 
@@ -131,12 +137,22 @@ function tick(){
       var currentProgress = progressBars[i]
       currentBar.canvas.clearRect(0, 0, PLAY_BAR_WIDTH, PLAY_BAR_HEIGHT);
       currentProgress.canvas.clearRect(0, 0, PROGRESS_BAR_WIDTH, PROGRESS_BAR_HEIGHT);
+
+      //move play bar
       moveBar(i)
 
+      //move item
+      //speed 0-5 for school/work, mental health bar at bottom = 5 speed, mental health bar at top = 0 speed
+      //0 - school, 1 - work, 2 - mental
+      var stressorSpeed;
+      if(i != 2){
+        stressorSpeed = 1 - (progressBars[2].percent / 100)
+      }
       var RANDOM_SEED = playBars[i].seed
-      var randomYValue = t.getValue(runs/500 + RANDOM_SEED) //Math.sin(2 * (RANDOM_SEED + runs/180)) + Math.sin(Math.PI * (RANDOM_SEED + runs/180))
+      var randomYValue = t.getValue(runs/(500) + RANDOM_SEED) //Math.sin(2 * (RANDOM_SEED + runs/180)) + Math.sin(Math.PI * (RANDOM_SEED + runs/180))
       setItem(i,300 + randomYValue*320)
 
+      //move progress bar
       var barTop = currentBar.ypos
       var barBottom = currentBar.ypos + BAR_HEIGHT
 
