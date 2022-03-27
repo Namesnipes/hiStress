@@ -9,7 +9,7 @@ body{
   border: 5px black solid;
   width: 900px;
   margin: 0px auto;
-  padding: 20px;
+  padding: 40px 40px 0px;
   position: relative;
 }
 #header{
@@ -30,6 +30,7 @@ canvas{
 }
 #schoolgame p{
   text-align: center;
+  line-height: 25px;
 }
 #workgame{
   display: inline-block;
@@ -38,6 +39,7 @@ canvas{
 }
 #workgame p{
   text-align: center;
+  line-height: 25px;
 }
 #mentalgame{
   display: inline-block;
@@ -46,6 +48,7 @@ canvas{
 }
 #mentalgame p{
   text-align: center;
+  line-height: 25px;
 }
 #bars{
   float: right;
