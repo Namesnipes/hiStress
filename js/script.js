@@ -38,13 +38,13 @@ var progressBars = [
                     {"canvas": mentalbarCanvas, "percent": 0, "won": false}
                   ]
 
-var schoolImage = new Image()
+var schoolImage = new Image(33,33)
 schoolImage.src = "assets/schoolIcon.png"
 
-var workImage = new Image()
+var workImage = new Image(42,24)
 workImage.src = "assets/workIcon.png"
 
-var mhImage = new Image()
+var mhImage = new Image(37,32)
 mhImage.src = "assets/mentalIcon.png"
 
 var playBars = [
@@ -96,7 +96,8 @@ function setPlayBar(canvasId,yCoord){// canvas id, y coordinate of bar (0 is the
 //moves the item corresponding to the canvasId to the y coordinate
 function setItem(canvasId, yCoord){
   var canvas = playBars[canvasId].canvas
-  var itemHeight = ITEM_HEIGHT
+  var img = playBars[canvasId].itemIcon
+  var itemHeight = img.height
 
   if((PLAY_BAR_HEIGHT - yCoord) < itemHeight) { //stop the bar from going through the bottom of the canvas
     setItem(canvasId, PLAY_BAR_HEIGHT - itemHeight)
@@ -108,7 +109,7 @@ function setItem(canvasId, yCoord){
 
   canvas.beginPath();
   if(playBars[canvasId].itemIcon){
-    canvas.drawImage(playBars[canvasId].itemIcon, 20,yCoord, PLAY_BAR_WIDTH-40, itemHeight); //x, y, width, height
+    canvas.drawImage(img, (PLAY_BAR_WIDTH-img.width)/2,yCoord, img.width, img.height); //x, y, width, height
   } else {
       canvas.rect(40,yCoord, PLAY_BAR_WIDTH-80, itemHeight); //x, y, width, height
   }
@@ -151,20 +152,22 @@ function tick(){
       //speed 0-5 for school/work, mental health bar at bottom = 5 speed, mental health bar at top = 0 speed
       //0 - school, 1 - work, 2 - mental
       var stressorSpeed;
+      var img = playBars[i].itemIcon
+
       if(i != 2){
         stressorSpeed = 1 - (progressBars[2].percent / 100)
       }
       var RANDOM_SEED = playBars[i].seed
       var randomYValue = t.getValue(runs/(500) + RANDOM_SEED) //returns a value 1 to -1 exclusive //Math.sin(2 * (RANDOM_SEED + runs/180)) + Math.sin(Math.PI * (RANDOM_SEED + runs/180))
       if(i == 0)console.log(randomYValue)
-      setItem(i,300 + randomYValue*320)
+      setItem(i,300 + randomYValue*520)
 
       //move progress bar
       var barTop = currentBar.ypos
       var barBottom = currentBar.ypos + BAR_HEIGHT
 
       var itemTop = currentBar.itemYPos
-      var itemBottom = currentBar.itemYPos + ITEM_HEIGHT
+      var itemBottom = currentBar.itemYPos + img.height
 
       if(itemTop > barTop && itemBottom < barBottom){
         changeProgress(i,0.2)
